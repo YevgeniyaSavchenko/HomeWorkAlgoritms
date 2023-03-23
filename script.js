@@ -1,36 +1,26 @@
-function mergeSort(arr) {
-    if (arr.length < 2) {
-      return arr;
-    }
-    
-    const middle = Math.floor(arr.length / 2);
-    const left = arr.slice(0, middle);
-    const right = arr.slice(middle);
-    
-    return merge(mergeSort(left), mergeSort(right));
+/* Алгоритм решения задачи Ханойских башен:
+
+1. Создать функцию для перемещения дисков.
+2. Определить количество дисков и начальное, промежуточное и конечное местоположение башен.
+3. Создать рекурсивную функцию для перемещения дисков.
+4. Проверить, что количество дисков больше 0.
+5. Если количество дисков равно 1, переместить его с начальной башни на конечную башню.
+6. Если количество дисков больше 1, вызвать рекурсивную функцию для перемещения n-1 диска с начальной башни на промежуточную башню.
+7. Переместить оставшийся диск с начальной башни на конечную башню.
+8. Вызвать рекурсивную функцию для перемещения n-1 диска с промежуточной башни на конечную башню. */
+
+
+
+function moveDisk(disk, fromTower, toTower) { //функция для перемещения дисков
+    console.log("Перемещение диска " + disk + " с башни " + fromTower + " на башню " + toTower); //выводим на экран информацию о перемещении дисков
   }
   
-  function merge(left, right) {
-    const result = [];
-    let i = 0;
-    let j = 0;
-    let inversions = 0;
-    
-    while (i < left.length && j < right.length) {
-      if (left[i] <= right[j]) {
-        result.push(left[i]);
-        i++;
-      } else {
-        result.push(right[j]);
-        j++;
-        inversions += (left.length - i);
-      }
+  function moveTower(height, fromTower, toTower, withTower) { //рекурсивная функция для перемещения дисков
+    if (height >= 1) {
+      moveTower(height-1, fromTower, withTower, toTower); //вызываем рекурсивно функцию для перемещения n-1 диска с начальной башни на промежуточную башню
+      moveDisk(height, fromTower, toTower); //перемещаем оставшийся диск с начальной башни на конечную башню
+      moveTower(height-1, withTower, toTower, fromTower); //вызываем рекурсивно функцию для перемещения n-1 диска с промежуточной башни на конечную башню
     }
-    
-    return result.concat(left.slice(i)).concat(right.slice(j)), inversions;
   }
   
-  const arr = [7, 8, 1, 4, 5, 3, 6, 2];
-  const sortedArr = mergeSort(arr);
-  
-  console.log(sortedArr); // [1, 2, 3, 4, 5, 6, 7, 8]
+  moveTower(3, "A", "C", "B"); //вызываем функцию и указываем количество дисков и начальное, промежуточное и конечное местоположение башен
